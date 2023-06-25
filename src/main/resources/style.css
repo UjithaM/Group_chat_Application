@@ -1,0 +1,5 @@
+.text-field .prompt-text {
+    -fx-prompt-text-fill: gray;
+    -fx-font-size: 12px;
+    -fx-translate-y: -10px;
+}
