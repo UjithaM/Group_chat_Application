@@ -5,6 +5,7 @@ module software.ujithamigara.groupchatapplication {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires com.jfoenix;
 
     opens software.ujithamigara.groupchatapplication to javafx.fxml;
     exports software.ujithamigara.groupchatapplication;
