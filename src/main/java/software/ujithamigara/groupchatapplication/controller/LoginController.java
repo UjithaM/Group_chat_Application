@@ -2,24 +2,23 @@ package software.ujithamigara.groupchatapplication.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.scene.layout.AnchorPane;
 
 public class LoginController {
 
     @FXML
-    private JFXPasswordField txtFieldPassword;
+    private AnchorPane node;
 
     @FXML
     private JFXTextField txtFieldUserName;
 
     @FXML
-    void txtFieldPasswordOnAction(ActionEvent event) {
+    void txtFieldUserNameOnAction(ActionEvent event) {
 
     }
-
     @FXML
-    void txtFieldUserNameOnAction(ActionEvent event) {
+    void loginOnAction(ActionEvent event) {
 
     }
 
