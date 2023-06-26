@@ -23,6 +23,10 @@ public class LoginController {
     @FXML
     private JFXTextField txtFieldUserName;
 
+    DataInputStream dataInputStream;
+    DataOutputStream dataOutputStream;
+    ServerSocket serverSocket;
+    Socket socket;
     @FXML
     void txtFieldUserNameOnAction(ActionEvent event) {
 
@@ -44,11 +48,11 @@ public class LoginController {
     }
     public void initialize(){
         new Thread(()-> {try {
-            ServerSocket serverSocket = new ServerSocket(3004);
-            Socket socket = serverSocket.accept();
+            serverSocket = new ServerSocket(3004);
+            socket = serverSocket.accept();
 
-            DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-            DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            dataInputStream = new DataInputStream(socket.getInputStream());
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
 
 
