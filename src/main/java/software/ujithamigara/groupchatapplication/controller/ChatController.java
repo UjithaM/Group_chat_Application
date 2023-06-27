@@ -27,7 +27,12 @@ public class ChatController {
 
     @FXML
     void sendBtnOnAction(ActionEvent event) {
-
+        try {
+            dataOutputStream.writeUTF(txtFieldMassage.getText());
+            dataOutputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -35,17 +40,24 @@ public class ChatController {
 
     }
     public void initialize(){
-        new Thread(()->{
             try {
                 socket = new Socket("localhost", 3004);
                 dataInputStream =  new  DataInputStream(socket.getInputStream());
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
-
+                new Thread(()->{
+                    while (true) {
+                        try {
+                            txtArea.appendText(dataInputStream.readUTF());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }).start();
+
     }
 
 }
