@@ -2,9 +2,12 @@ package software.ujithamigara.groupchatapplication.controller;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -14,10 +17,8 @@ import java.net.Socket;
 public class ChatController {
     @FXML
     private AnchorPane node;
-
     @FXML
-    private  JFXTextArea txtArea;
-
+    private VBox Vbox;
 
     @FXML
     private JFXTextField txtFieldMassage;
@@ -37,7 +38,7 @@ public class ChatController {
 
     @FXML
     void txtFiledMassageOnAction(ActionEvent event) {
-
+        sendBtnOnAction(new ActionEvent());
     }
     public void initialize(){
             try {
@@ -48,7 +49,11 @@ public class ChatController {
                 new Thread(()->{
                     while (true) {
                         try {
-                            txtArea.appendText(dataInputStream.readUTF());
+                            String massage = dataInputStream.readUTF();
+                            Platform.runLater(() -> {
+                                Label label = new Label(massage);
+                                Vbox.getChildren().add(label);
+                            });
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
