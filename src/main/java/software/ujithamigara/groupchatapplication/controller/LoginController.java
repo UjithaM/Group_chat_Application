@@ -9,9 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import software.ujithamigara.groupchatapplication.Launcher;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -69,9 +67,23 @@ public class LoginController {
                 DataInputStream dataInputStream = new DataInputStream(clientSocket.getInputStream());
 
                 while (true) {
-                    String message = dataInputStream.readUTF();
-                    if (message != null) {
-                        broadcastMessage(message);
+                    // Read the message type
+                    String messageType = dataInputStream.readUTF();
+
+                    if (messageType.equals("TEXT")) {
+                        // Text message
+                        String message = dataInputStream.readUTF();
+                        if (message != null) {
+                            broadcastMessage(txtFieldUserName.getText() + " : " + message);
+                        }
+                    } else if (messageType.equals("IMAGE")) {
+                        // Image message
+                        int fileSize = dataInputStream.readInt();
+                        byte[] fileData = new byte[fileSize];
+                        dataInputStream.readFully(fileData);
+                        if (fileData != null) {
+                            broadcastImage(fileData);
+                        }
                     }
                 }
             } catch (IOException e) {
@@ -84,7 +96,22 @@ public class LoginController {
         for (Socket client : socketList) {
             try {
                 DataOutputStream clientOutputStream = new DataOutputStream(client.getOutputStream());
-                clientOutputStream.writeUTF(txtFieldUserName.getText()+" : "+message);
+                clientOutputStream.writeUTF("TEXT");
+                clientOutputStream.writeUTF(message);
+                clientOutputStream.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void broadcastImage(byte[] fileData) {
+        for (Socket client : socketList) {
+            try {
+                DataOutputStream clientOutputStream = new DataOutputStream(client.getOutputStream());
+                clientOutputStream.writeUTF("IMAGE");
+                clientOutputStream.writeInt(fileData.length);
+                clientOutputStream.write(fileData);
                 clientOutputStream.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
