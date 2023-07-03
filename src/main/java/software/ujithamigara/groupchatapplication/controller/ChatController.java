@@ -85,8 +85,8 @@ public class ChatController {
                                 // Create an ImageView to display the received image
                                 ImageView imageView = new ImageView();
                                 imageView.setPreserveRatio(true);
-                                imageView.setFitWidth(50); // Adjust the width as needed
-                                imageView.setFitHeight(50); // Adjust the height as needed
+                                imageView.setFitWidth(100); // Adjust the width as needed
+                                imageView.setFitHeight(100); // Adjust the height as needed
 
                                 // Load and set the image
                                 try {
