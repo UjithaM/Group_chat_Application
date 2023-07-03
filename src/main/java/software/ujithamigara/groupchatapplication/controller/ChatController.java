@@ -1,6 +1,5 @@
 package software.ujithamigara.groupchatapplication.controller;
 
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -10,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
@@ -29,6 +29,7 @@ public class ChatController {
     Socket socket;
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
+    String updated = "";
 
     @FXML
     void sendBtnOnAction(ActionEvent event) {
@@ -39,6 +40,7 @@ public class ChatController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        updated = "done";
     }
 
     @FXML
@@ -61,8 +63,18 @@ public class ChatController {
                             // Text message
                             String message = dataInputStream.readUTF();
                             Platform.runLater(() -> {
-                                Label label = new Label(message);
-                                vBox.getChildren().add(label);
+                                if (updated.equals("done")) {
+                                    Label label = new Label(message);
+                                    label.setStyle("-fx-font-size: 20px; -fx-padding: 5px;");
+                                    BorderPane borderPane = new BorderPane();
+                                    borderPane.setRight(label);
+                                    vBox.getChildren().add(borderPane);
+                                    updated = "";
+                                }else {
+                                    Label label = new Label(message);
+                                    label.setStyle("-fx-font-size: 20px; -fx-padding: 5px;");
+                                    vBox.getChildren().add(label);
+                                }
                             });
                         } else if (messageType.equals("IMAGE")) {
                             // Image message
@@ -81,7 +93,15 @@ public class ChatController {
                                     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(fileData);
                                     Image image = new Image(byteArrayInputStream);
                                     imageView.setImage(image);
-                                    vBox.getChildren().add(imageView);
+                                    if (updated.equals("done")) {
+                                        BorderPane borderPane = new BorderPane();
+                                        borderPane.setRight(imageView);
+                                        vBox.getChildren().add(borderPane);
+                                        updated = "";
+                                    }else {
+
+                                        vBox.getChildren().add(imageView);
+                                    }
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -99,6 +119,7 @@ public class ChatController {
 
     @FXML
     void cameraOnAction(ActionEvent event) {
+        updated = "done";
         Platform.runLater(() -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().addAll(

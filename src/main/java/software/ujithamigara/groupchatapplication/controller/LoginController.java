@@ -16,10 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginController {
-
-    @FXML
-    private AnchorPane node;
-
     @FXML
     private JFXTextField txtFieldUserName;
     ServerSocket serverSocket;
@@ -28,7 +24,7 @@ public class LoginController {
 
     @FXML
     void txtFieldUserNameOnAction(ActionEvent event) {
-
+        loginOnAction(new ActionEvent());
     }
 
     @FXML
