@@ -3,3 +3,6 @@
     -fx-font-size: 12px;
     -fx-translate-y: -10px;
 }
+.bac{
+    -fx-background-image: url("img/desktop-wallpaper-i-whatsapp-background-chat-whatsapp-graffiti.jpg");
+}

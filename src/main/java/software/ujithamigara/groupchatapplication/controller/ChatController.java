@@ -4,14 +4,14 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
@@ -30,12 +30,15 @@ public class ChatController {
     DataOutputStream dataOutputStream;
     DataInputStream dataInputStream;
     String updated = "";
+    String userName;
 
     @FXML
     void sendBtnOnAction(ActionEvent event) {
+        Stage stage = (Stage) node.getScene().getWindow();
+        userName = stage.getTitle();
         try {
             dataOutputStream.writeUTF("TEXT");
-            dataOutputStream.writeUTF(txtFieldMassage.getText());
+            dataOutputStream.writeUTF(userName +"\n"+txtFieldMassage.getText());
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,14 +68,16 @@ public class ChatController {
                             Platform.runLater(() -> {
                                 if (updated.equals("done")) {
                                     Label label = new Label(message);
-                                    label.setStyle("-fx-font-size: 20px; -fx-padding: 5px;");
+                                    label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
+                                    label.setBackground(new Background(new BackgroundFill(Color.web("#25D366"), new CornerRadii(10), new Insets(10))));
                                     BorderPane borderPane = new BorderPane();
                                     borderPane.setRight(label);
                                     vBox.getChildren().add(borderPane);
                                     updated = "";
                                 }else {
                                     Label label = new Label(message);
-                                    label.setStyle("-fx-font-size: 20px; -fx-padding: 5px;");
+                                    label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
+                                    label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(10))));
                                     vBox.getChildren().add(label);
                                 }
                             });

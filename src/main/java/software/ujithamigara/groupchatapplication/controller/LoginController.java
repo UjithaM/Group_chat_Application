@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import software.ujithamigara.groupchatapplication.Launcher;
 
@@ -34,7 +33,7 @@ public class LoginController {
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load());
-            stage.setTitle(txtFieldUserName.getText() + " chat");
+            stage.setTitle(txtFieldUserName.getText());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -70,7 +69,7 @@ public class LoginController {
                         // Text message
                         String message = dataInputStream.readUTF();
                         if (message != null) {
-                            broadcastMessage(txtFieldUserName.getText() + " : " + message);
+                            broadcastMessage(message);
                         }
                     } else if (messageType.equals("IMAGE")) {
                         // Image message

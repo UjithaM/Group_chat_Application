@@ -9,24 +9,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="node" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software.ujithamigara.groupchatapplication.controller.ChatController">
+<AnchorPane fx:id="node" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="580.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="software.ujithamigara.groupchatapplication.controller.ChatController">
    <children>
-      <JFXTextField fx:id="txtFieldMassage" layoutX="90.0" layoutY="429.0" onAction="#txtFiledMassageOnAction" prefHeight="43.0" prefWidth="395.0">
+      <JFXTextField fx:id="txtFieldMassage" layoutX="92.0" layoutY="562.0" onAction="#txtFiledMassageOnAction" prefHeight="43.0" prefWidth="395.0">
          <font>
             <Font size="20.0" />
          </font>
       </JFXTextField>
-      <JFXButton layoutX="488.0" layoutY="429.0" onAction="#sendBtnOnAction" text="Send">
+      <JFXButton layoutX="491.0" layoutY="562.0" onAction="#sendBtnOnAction" text="Send">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </JFXButton>
-      <ScrollPane layoutX="32.0" layoutY="30.0" prefHeight="387.0" prefWidth="525.0">
+      <ScrollPane layoutX="32.0" layoutY="30.0" prefHeight="522.0" prefWidth="526.0">
          <content>
-            <VBox fx:id="vBox" prefHeight="384.0" prefWidth="523.0" />
+            <VBox fx:id="vBox" prefHeight="518.0" prefWidth="520.0" styleClass="bac" stylesheets="@../../../style.css" />
          </content>
       </ScrollPane>
-      <JFXButton layoutX="32.0" layoutY="429.0" onAction="#cameraOnAction" prefHeight="34.0" prefWidth="47.0" text=".">
+      <JFXButton layoutX="32.0" layoutY="559.0" onAction="#cameraOnAction" prefHeight="34.0" prefWidth="47.0" text=".">
          <graphic>
             <ImageView fx:id="image" fitHeight="42.0" fitWidth="43.0">
                <image>
