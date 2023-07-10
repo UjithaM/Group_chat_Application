@@ -13,16 +13,18 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.Socket;
 import java.nio.file.Files;
+import java.util.concurrent.TimeUnit;
 
 public class ChatController {
     @FXML
     private AnchorPane node;
     @FXML
     private VBox vBox;
-
 
     @FXML
     private JFXTextField txtFieldMassage;
@@ -36,14 +38,16 @@ public class ChatController {
     void sendBtnOnAction(ActionEvent event) {
         Stage stage = (Stage) node.getScene().getWindow();
         userName = stage.getTitle();
+        String massage = txtFieldMassage.getText();
         try {
             dataOutputStream.writeUTF("TEXT");
-            dataOutputStream.writeUTF(userName +"\n"+txtFieldMassage.getText());
+            dataOutputStream.writeUTF(userName +"\n"+massage);
             dataOutputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
         updated = "done";
+        txtFieldMassage.setText("");
     }
 
     @FXML
@@ -151,6 +155,30 @@ public class ChatController {
                 }
             }
         });
+
     }
+    @FXML
+    void emojiBtnOnAction(ActionEvent event) {
+        updated = "done";
+        txtFieldMassage.requestFocus();
+
+        // Delay execution for a short time to ensure TextField has focus
+        try {
+            TimeUnit.MILLISECONDS.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_WINDOWS);
+            robot.keyPress(KeyEvent.VK_PERIOD);
+            robot.keyRelease(KeyEvent.VK_PERIOD);
+            robot.keyRelease(KeyEvent.VK_WINDOWS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
