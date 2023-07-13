@@ -73,11 +73,12 @@ public class LoginController {
                         }
                     } else if (messageType.equals("IMAGE")) {
                         // Image message
+                        String name = dataInputStream.readUTF();
                         int fileSize = dataInputStream.readInt();
                         byte[] fileData = new byte[fileSize];
                         dataInputStream.readFully(fileData);
                         if (fileData != null) {
-                            broadcastImage(fileData);
+                            broadcastImage(fileData, name);
                         }
                     }
                 }
@@ -100,11 +101,12 @@ public class LoginController {
         }
     }
 
-    private void broadcastImage(byte[] fileData) {
+    private void broadcastImage(byte[] fileData, String userName) {
         for (Socket client : socketList) {
             try {
                 DataOutputStream clientOutputStream = new DataOutputStream(client.getOutputStream());
                 clientOutputStream.writeUTF("IMAGE");
+                clientOutputStream.writeUTF(userName);
                 clientOutputStream.writeInt(fileData.length);
                 clientOutputStream.write(fileData);
                 clientOutputStream.flush();

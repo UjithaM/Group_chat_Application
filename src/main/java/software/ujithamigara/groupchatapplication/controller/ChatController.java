@@ -86,6 +86,7 @@ public class ChatController {
                                 }
                             });
                         } else if (messageType.equals("IMAGE")) {
+                            String user = dataInputStream.readUTF();
                             // Image message
                             int fileSize = dataInputStream.readInt();
                             byte[] fileData = new byte[fileSize];
@@ -103,12 +104,22 @@ public class ChatController {
                                     Image image = new Image(byteArrayInputStream);
                                     imageView.setImage(image);
                                     if (updated.equals("done")) {
+                                        Label label = new Label(user);
+                                        label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
+                                        label.setBackground(new Background(new BackgroundFill(Color.web("#25D366"), new CornerRadii(10), new Insets(10))));
+                                        BorderPane borderPane1 = new BorderPane();
+                                        borderPane1.setRight(label);
+
                                         BorderPane borderPane = new BorderPane();
                                         borderPane.setRight(imageView);
+                                        vBox.getChildren().add(borderPane1);
                                         vBox.getChildren().add(borderPane);
                                         updated = "";
                                     }else {
-
+                                        Label label = new Label(user);
+                                        label.setStyle("-fx-font-size: 20px; -fx-padding: 20px;");
+                                        label.setBackground(new Background(new BackgroundFill(Color.WHITE, new CornerRadii(10), new Insets(10))));
+                                        vBox.getChildren().add(label);
                                         vBox.getChildren().add(imageView);
                                     }
                                 } catch (Exception e) {
@@ -128,6 +139,8 @@ public class ChatController {
 
     @FXML
     void cameraOnAction(ActionEvent event) {
+        Stage stage = (Stage) node.getScene().getWindow();
+        userName = stage.getTitle();
         updated = "done";
         Platform.runLater(() -> {
             FileChooser fileChooser = new FileChooser();
@@ -147,6 +160,7 @@ public class ChatController {
 
                     // Send the image file to the server
                     dataOutputStream.writeUTF("IMAGE");
+                    dataOutputStream.writeUTF(userName);
                     dataOutputStream.writeInt(fileData.length);
                     dataOutputStream.write(fileData);
                     dataOutputStream.flush();
